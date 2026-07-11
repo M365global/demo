@@ -962,7 +962,7 @@ html = r'''<!doctype html>
 
         <a
           class="data-download"
-          href="./company-request-tracker-demo.xlsx"
+          href="./Request_Tracker_Demo.xlsx"
           download
         >
           <svg
@@ -1366,10 +1366,3 @@ html = r'''<!doctype html>
   </script>
 </body>
 </html>
-'''
-
-out = Path("/mnt/data/company-request-tracker-optimized.html")
-out.write_text(html, encoding="utf-8")
-
-print(f"Created: {out}")
-print(f"Size: {out.stat().st_size:,} bytes")
