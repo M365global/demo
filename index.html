@@ -47,7 +47,7 @@
     href="https://app.powerbi.com"
   >
 
-  <title>Request Tracker — Interactive Power BI Demo</title>
+  <title>COMPANY Request Tracker — Interactive Power BI Demo</title>
 
   <style>
     :root {
@@ -282,12 +282,6 @@
       animation: pulse 2.2s ease-in-out infinite;
     }
 
-    .swipe-hint {
-      color: var(--ink-soft);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-    }
-
     @keyframes pulse {
       0%,
       100% {
@@ -315,6 +309,7 @@
       opacity: 0.85;
       background-repeat: no-repeat;
       background-size: 22px 22px;
+
       background-position:
         top left,
         top left,
@@ -336,20 +331,34 @@
         linear-gradient(-90deg, var(--teal) 2px, transparent 2px);
     }
 
-    .report-viewport {
+    /*
+     * The report keeps its original 1024 × 1060 dimensions.
+     * JavaScript scales the complete report proportionally to fit the container.
+     */
+
+    .report-fit {
       position: relative;
-      overflow-x: auto;
-      overflow-y: hidden;
+      width: 100%;
+      min-height: 300px;
+      overflow: hidden;
       background: var(--panel);
       border-radius: calc(var(--radius-large) - 0.4rem);
-      -webkit-overflow-scrolling: touch;
+    }
+
+    .report-scale {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1024px;
+      height: 1060px;
+      transform-origin: top left;
     }
 
     .report-frame {
       display: block;
-      width: 100%;
-      min-width: 640px;
-      height: 720px;
+      width: 1024px;
+      height: 1060px;
+      max-width: none;
       border: 0;
       background: var(--panel);
     }
@@ -357,10 +366,11 @@
     .skeleton {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
+
       background:
         linear-gradient(
           100deg,
@@ -368,10 +378,11 @@
           #f2f6f6 45%,
           var(--panel) 60%
         );
+
       background-size: 200% 100%;
       color: var(--ink-soft);
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 1rem;
       letter-spacing: 0.04em;
       animation: shimmer 1.4s ease-in-out infinite;
       transition: opacity 0.25s ease;
@@ -450,7 +461,7 @@
     }
 
     .overview-list li {
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.65rem;
       padding-left: 0.15rem;
     }
 
@@ -459,6 +470,18 @@
     }
 
     .overview-list li::marker {
+      color: var(--teal);
+    }
+
+    .explore-link {
+      display: inline-block;
+      margin-left: 0.25rem;
+      color: var(--teal-deep);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .explore-link:hover {
       color: var(--teal);
     }
 
@@ -715,11 +738,6 @@
         padding: 1.75rem;
       }
 
-      .report-frame {
-        min-width: 0;
-        height: 860px;
-      }
-
       .footer-links {
         flex-direction: row;
         justify-content: center;
@@ -733,10 +751,6 @@
       .chip-grid,
       .simulator-benefits {
         grid-template-columns: repeat(3, 1fr);
-      }
-
-      .swipe-hint {
-        display: none;
       }
     }
 
@@ -753,10 +767,6 @@
 
       .hero {
         padding-top: 3.25rem;
-      }
-
-      .report-frame {
-        height: 1060px;
       }
 
       .simulator-card {
@@ -789,7 +799,7 @@
 
   <header class="hero">
     <p class="eyebrow">
-      Prepared for Zachary and Greg - Interactive demonstration
+      Prepared for COMPANY · Interactive demonstration
     </p>
 
     <h1>Request Tracker</h1>
@@ -818,7 +828,7 @@
       aria-labelledby="report-heading"
     >
       <h2 id="report-heading" class="visually-hidden">
-        Interactive request tracker report
+        Interactive COMPANY request tracker report
       </h2>
 
       <div class="report-meta">
@@ -826,31 +836,31 @@
           <span class="dot" aria-hidden="true"></span>
           Live interactive report
         </span>
-
-        <span class="swipe-hint" aria-hidden="true">
-          Swipe to explore →
-        </span>
       </div>
 
       <div class="bezel">
-        <div class="report-viewport">
-          <div
-            class="skeleton"
-            id="skeleton"
-            aria-hidden="true"
-          >
-            Loading report…
-          </div>
+        <div class="report-fit" id="reportFit">
+          <div class="report-scale" id="reportScale">
+            <div
+              class="skeleton"
+              id="skeleton"
+              aria-hidden="true"
+            >
+              Loading report…
+            </div>
 
-          <iframe
-            class="report-frame"
-            id="reportFrame"
-            title="Interactive request tracker Power BI report"
-            src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="fullscreen"
-            allowfullscreen>
-          </iframe>
+            <iframe
+              class="report-frame"
+              id="reportFrame"
+              title="Interactive COMPANY request tracker Power BI report"
+              width="1024"
+              height="1060"
+              src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="fullscreen"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
       </div>
 
@@ -910,24 +920,64 @@
             Use <strong>Site Location</strong>,
             <strong>Request Type</strong> and <strong>Status</strong> to narrow
             the view.
+
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore the Site Location, Request Type and Status filters"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
             Select a chart bar, segment or data point to update the other
             visuals.
+
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore chart cross-filtering in the interactive report"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
             Hover over a visual to see more detail.
+
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore report tooltips and additional visual details"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
-            Use the report tabs to move between the Overview and Operations
-            pages.
+            Use the report tabs to move between the
+            <strong>Overview</strong> and <strong>Operations</strong> pages.
+
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore the Overview and Operations report pages"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
-            All figures recalculate immediately when filters are changed.
+            Change a filter and watch the figures recalculate immediately.
+
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore automatic recalculation when report filters change"
+            >
+              Click here to explore
+            </a>
           </li>
         </ul>
 
@@ -1132,15 +1182,64 @@
     (function () {
       "use strict";
 
+      var BASE_WIDTH = 1024;
+      var BASE_HEIGHT = 1060;
+
       var frame = document.getElementById("reportFrame");
       var skeleton = document.getElementById("skeleton");
       var fallback = document.getElementById("fallback");
+      var reportFit = document.getElementById("reportFit");
+      var reportScale = document.getElementById("reportScale");
+
       var reportLoaded = false;
+
+      function resizeReport() {
+        var availableWidth = reportFit.clientWidth;
+
+        if (!availableWidth) {
+          return;
+        }
+
+        /*
+         * Preserve the original report proportions.
+         * Scale down on smaller screens without stretching or cropping.
+         */
+        var scale = Math.min(1, availableWidth / BASE_WIDTH);
+        var renderedWidth = BASE_WIDTH * scale;
+        var renderedHeight = BASE_HEIGHT * scale;
+
+        /*
+         * Centre the report when the container is wider than 1024px.
+         */
+        var leftOffset = Math.max(
+          0,
+          (availableWidth - renderedWidth) / 2
+        );
+
+        reportScale.style.left = leftOffset + "px";
+        reportScale.style.transform = "scale(" + scale + ")";
+        reportFit.style.height = Math.ceil(renderedHeight) + "px";
+      }
 
       frame.addEventListener("load", function () {
         reportLoaded = true;
         skeleton.classList.add("is-hidden");
+        resizeReport();
       });
+
+      if ("ResizeObserver" in window) {
+        var resizeObserver = new ResizeObserver(function () {
+          resizeReport();
+        });
+
+        resizeObserver.observe(reportFit);
+      } else {
+        window.addEventListener("resize", resizeReport);
+      }
+
+      window.addEventListener("orientationchange", resizeReport);
+
+      window.requestAnimationFrame(resizeReport);
 
       window.setTimeout(function () {
         if (!reportLoaded) {
