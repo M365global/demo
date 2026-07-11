@@ -12,22 +12,27 @@
 
   <meta
     name="description"
-    content="Explore an interactive Power BI request tracker for monitoring service-request volume, SLA compliance, resolution times and operational trends using synthetic demonstration data."
+    content="Explore the COMPANY interactive Power BI request tracker for SLA performance, service operations and request analysis, and discover how React and JavaScript can create custom data simulators and decision-support tools."
+  >
+
+  <meta
+    name="keywords"
+    content="Power BI dashboard, request tracker, SLA reporting, service operations, React data simulator, JavaScript analytics, interactive reporting, business intelligence, decision support tools"
   >
 
   <meta name="robots" content="noindex,nofollow">
 
+  <meta property="og:type" content="website">
+
   <meta
     property="og:title"
-    content="ASML Request Tracker — Interactive Power BI Demo"
+    content="COMPANY Request Tracker — Interactive Power BI Demo"
   >
 
   <meta
     property="og:description"
-    content="Explore SLA performance, request volume, resolution times and operational trends in a live, filterable Power BI report."
+    content="Explore service-request volume, SLA performance and operational trends in a live Power BI report, plus custom interactive analysis tools built with React and JavaScript."
   >
-
-  <meta property="og:type" content="website">
 
   <link rel="icon" href="data:,">
 
@@ -42,7 +47,7 @@
     href="https://app.powerbi.com"
   >
 
-  <title>ASML Request Tracker — Interactive Power BI Demo</title>
+  <title>COMPANY Request Tracker — Interactive Power BI Demo</title>
 
   <style>
     :root {
@@ -120,7 +125,6 @@
     }
 
     a:focus-visible,
-    button:focus-visible,
     .report-frame:focus-visible {
       outline: 3px solid var(--focus);
       outline-offset: 3px;
@@ -282,6 +286,12 @@
       animation: pulse 2.2s ease-in-out infinite;
     }
 
+    .swipe-hint {
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+    }
+
     @keyframes pulse {
       0%,
       100% {
@@ -332,14 +342,17 @@
 
     .report-viewport {
       position: relative;
-      overflow: hidden;
+      overflow-x: auto;
+      overflow-y: hidden;
       background: var(--panel);
       border-radius: calc(var(--radius-large) - 0.4rem);
+      -webkit-overflow-scrolling: touch;
     }
 
     .report-frame {
       display: block;
       width: 100%;
+      min-width: 640px;
       height: 720px;
       border: 0;
       background: var(--panel);
@@ -394,20 +407,16 @@
     }
 
     /*
-     * CLIENT OVERVIEW
+     * SHARED CONTENT SECTIONS
      */
 
-    .overview {
+    .overview,
+    .how-to,
+    .capabilities,
+    .simulator-promotion {
       max-width: var(--content-width);
       margin: 0 auto;
       padding: 1rem 1.25rem 2rem;
-    }
-
-    .overview-panel {
-      padding: 1.25rem;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-medium);
     }
 
     .overview h2,
@@ -415,9 +424,20 @@
     .capabilities h2,
     .simulator-promotion h2 {
       margin: 0 0 1rem;
-      font-size: clamp(1.3rem, 5vw, 1.65rem);
+      font-size: clamp(1.3rem, 5vw, 1.7rem);
       letter-spacing: -0.015em;
       line-height: 1.25;
+    }
+
+    /*
+     * CLIENT OVERVIEW
+     */
+
+    .overview-panel {
+      padding: 1.25rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
     }
 
     .overview p {
@@ -432,14 +452,6 @@
     /*
      * INTERACTION STEPS
      */
-
-    .how-to,
-    .capabilities,
-    .simulator-promotion {
-      max-width: var(--content-width);
-      margin: 0 auto;
-      padding: 1rem 1.25rem 2rem;
-    }
 
     .steps {
       display: grid;
@@ -505,16 +517,35 @@
     }
 
     /*
-     * REACT AND JAVASCRIPT PROMOTION
+     * REACT AND JAVASCRIPT ARTICLE
      */
 
     .simulator-card {
-      padding: 1.25rem;
+      position: relative;
       overflow: hidden;
+      padding: 1.25rem;
       background: var(--teal-deep);
       color: #ffffff;
       border-radius: var(--radius-large);
       box-shadow: var(--shadow-panel);
+    }
+
+    .simulator-card::after {
+      content: "";
+      position: absolute;
+      right: -5rem;
+      bottom: -6rem;
+      width: 14rem;
+      height: 14rem;
+      background: rgb(255 255 255 / 5%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .simulator-content {
+      position: relative;
+      z-index: 1;
+      max-width: 54rem;
     }
 
     .simulator-eyebrow {
@@ -528,13 +559,31 @@
     }
 
     .simulator-card h2 {
+      max-width: 48rem;
       color: #ffffff;
     }
 
     .simulator-card p {
-      max-width: 49rem;
       margin: 0 0 1rem;
       color: #e9f5f4;
+    }
+
+    .simulator-benefits {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.65rem;
+      margin: 1.25rem 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .simulator-benefits li {
+      padding: 0.75rem;
+      background: rgb(255 255 255 / 8%);
+      border: 1px solid rgb(255 255 255 / 16%);
+      border-radius: var(--radius-small);
+      color: #ffffff;
+      font-size: 0.9rem;
     }
 
     .simulator-link {
@@ -655,6 +704,7 @@
       }
 
       .report-frame {
+        min-width: 0;
         height: 860px;
       }
 
@@ -669,12 +719,14 @@
      */
 
     @media (min-width: 720px) {
-      .steps {
+      .steps,
+      .chip-grid,
+      .simulator-benefits {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .chip-grid {
-        grid-template-columns: repeat(3, 1fr);
+      .swipe-hint {
+        display: none;
       }
     }
 
@@ -729,7 +781,7 @@
 
   <header class="hero">
     <p class="eyebrow">
-      Prepared for ASML · Interactive demonstration
+      Prepared for COMPANY · Interactive demonstration
     </p>
 
     <h1>Request Tracker</h1>
@@ -759,13 +811,17 @@
       aria-labelledby="report-heading"
     >
       <h2 id="report-heading" class="visually-hidden">
-        Interactive ASML request tracker report
+        Interactive COMPANY request tracker report
       </h2>
 
       <div class="report-meta">
         <span class="live-pill">
           <span class="dot" aria-hidden="true"></span>
           Live interactive report
+        </span>
+
+        <span class="swipe-hint" aria-hidden="true">
+          Swipe to explore →
         </span>
       </div>
 
@@ -782,7 +838,7 @@
           <iframe
             class="report-frame"
             id="reportFrame"
-            title="Interactive ASML request tracker Power BI report"
+            title="Interactive COMPANY request tracker Power BI report"
             src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen>
@@ -792,6 +848,7 @@
 
       <p class="fallback" id="fallback" hidden>
         Trouble loading the embedded report?
+
         <a
           href="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
           target="_blank"
@@ -814,8 +871,8 @@
         </h2>
 
         <p>
-          The <strong>ASML Request Tracker</strong> is an interactive Power BI
-          demonstration built with synthetic service-request data to show how
+          The <strong>COMPANY Request Tracker</strong> is an interactive Power
+          BI demonstration built with synthetic service-request data to show how
           operational performance can be monitored from a single report. The
           <strong>Overview</strong> page summarises total request volume, SLA
           compliance, average resolution time, active line-down requests,
@@ -928,45 +985,62 @@
       class="simulator-promotion"
       aria-labelledby="simulator-heading"
     >
-      <div class="simulator-card">
-        <p class="simulator-eyebrow">
-          Beyond traditional dashboards
-        </p>
+      <article class="simulator-card">
+        <div class="simulator-content">
+          <p class="simulator-eyebrow">
+            Beyond traditional dashboards
+          </p>
 
-        <h2 id="simulator-heading">
-          Build interactive analysis tools with React and JavaScript
-        </h2>
+          <h2 id="simulator-heading">
+            Turn static data into interactive React and JavaScript simulators
+          </h2>
 
-        <p>
-          Power BI provides governed reporting, operational monitoring and
-          structured data exploration. When organisations need configurable
-          scenarios, adjustable assumptions or highly customised workflows,
-          React and JavaScript can turn static analysis into purpose-built
-          interactive simulators.
-        </p>
+          <p>
+            Power BI provides governed reporting, operational monitoring and
+            structured data exploration. For organisations that need scenario
+            modelling, adjustable assumptions or highly customised workflows,
+            React and JavaScript can extend analytics beyond the boundaries of
+            a traditional dashboard.
+          </p>
 
-        <p>
-          These responsive tools allow stakeholders to change inputs, test
-          assumptions and see calculated outcomes immediately. They can combine
-          custom interfaces, protected business logic and live data services to
-          create decision-support experiences designed around a specific
-          business question.
-        </p>
+          <p>
+            Purpose-built analysis tools allow decision-makers to change
+            inputs, test assumptions and see calculated outcomes immediately.
+            This creates a more active decision-making experience than a static
+            presentation or spreadsheet.
+          </p>
 
-        <a
-          class="simulator-link"
-          href="https://www.linkedin.com/pulse/stop-presenting-static-databuild-interactive-simulators-4u62e/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Explore interactive React data simulators
-          <span aria-hidden="true">→</span>
+          <ul class="simulator-benefits">
+            <li>
+              Test business scenarios and assumptions in real time.
+            </li>
 
-          <span class="visually-hidden">
-            Opens the LinkedIn article in a new tab
-          </span>
-        </a>
-      </div>
+            <li>
+              Create interfaces designed around a specific decision or process.
+            </li>
+
+            <li>
+              Combine custom controls, business logic and live API data.
+            </li>
+          </ul>
+
+          <a
+            class="simulator-link"
+            href="https://www.linkedin.com/pulse/stop-presenting-static-databuild-interactive-simulators-4u62e/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Read Stop Presenting Static Data, Build Interactive Simulators on LinkedIn"
+          >
+            Read: Stop Presenting Static Data—Build Interactive Simulators
+
+            <span aria-hidden="true">→</span>
+
+            <span class="visually-hidden">
+              Opens the LinkedIn article in a new tab
+            </span>
+          </a>
+        </div>
+      </article>
     </section>
   </main>
 
