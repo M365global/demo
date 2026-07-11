@@ -3,21 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Interactive ASML Request Tracker Power BI demonstration using synthetic service-request data."
+  >
   <meta name="robots" content="noindex,nofollow">
 
-  <title>Request Tracker Power BI Demo</title>
+  <title>ASML Request Tracker Power BI Demo</title>
 
   <style>
     :root {
-      --page-bg: #dce5e9;
+      --page-background: #dce5e9;
       --surface: #f4f7f8;
       --surface-strong: #ffffff;
-      --text: #1f2933;
-      --text-muted: #4f5d66;
+      --text-primary: #1f2933;
+      --text-secondary: #4f5d66;
       --accent: #147d7e;
       --accent-dark: #0d5e5f;
+      --accent-light: #d9f3f1;
       --border: #b8c6cc;
-      --focus: #0b5fff;
+      --focus: #ffbf47;
+      --shadow: 0 6px 20px rgb(31 41 51 / 12%);
+      --radius-small: 0.5rem;
+      --radius-large: 1rem;
+      --content-width: 1440px;
     }
 
     * {
@@ -30,16 +40,25 @@
 
     body {
       margin: 0;
-      background: var(--page-bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      background: var(--page-background);
+      color: var(--text-primary);
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
       font-size: 1rem;
-      line-height: 1.6;
+      line-height: 1.65;
+    }
+
+    img,
+    iframe {
+      max-width: 100%;
     }
 
     a {
       color: var(--accent-dark);
       text-underline-offset: 0.2em;
+      text-decoration-thickness: 0.1em;
     }
 
     a:hover {
@@ -52,36 +71,89 @@
       outline-offset: 4px;
     }
 
+    .skip-link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 0.75rem 1rem;
+      background: var(--surface-strong);
+      color: var(--text-primary);
+      font-weight: 700;
+      transform: translateY(-120%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
     .page-shell {
       width: 100%;
+      max-width: var(--content-width);
       margin: 0 auto;
       padding: 1rem;
     }
 
     .hero {
       margin-bottom: 1rem;
+      padding: 2rem 1.25rem;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          135deg,
+          var(--accent-dark),
+          var(--accent)
+        );
+      color: var(--surface-strong);
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-content {
+      max-width: 52rem;
     }
 
     .eyebrow {
-      display: inline-block;
       margin: 0 0 0.5rem;
-      color: var(--accent-dark);
+      color: var(--accent-light);
       font-size: 0.8rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
-    h1 {
+    .hero h1 {
       margin: 0;
-      font-size: clamp(1.7rem, 7vw, 2.8rem);
-      line-height: 1.15;
+      color: var(--surface-strong);
+      font-size: clamp(2rem, 9vw, 3.8rem);
+      line-height: 1.08;
+      text-wrap: balance;
     }
 
-    .subtitle {
-      margin: 0.75rem 0 0;
-      color: var(--text-muted);
-      font-size: 1rem;
+    .hero-description {
+      max-width: 45rem;
+      margin: 1rem 0 1.25rem;
+      color: #f2fbfa;
+      font-size: 1.05rem;
+    }
+
+    .hero-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.75rem;
+      padding: 0.7rem 1rem;
+      background: var(--surface-strong);
+      color: var(--accent-dark);
+      border: 2px solid var(--surface-strong);
+      border-radius: var(--radius-small);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .hero-button:hover {
+      background: var(--surface);
+      color: var(--accent-dark);
     }
 
     .overview {
@@ -89,28 +161,48 @@
       padding: 1rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
+      border-radius: var(--radius-large);
       box-shadow: 0 3px 12px rgb(31 41 51 / 8%);
     }
 
     .overview h2 {
-      margin: 0 0 0.65rem;
-      font-size: 1.25rem;
+      margin: 0 0 0.75rem;
+      color: var(--text-primary);
+      font-size: clamp(1.35rem, 5vw, 1.75rem);
+      line-height: 1.25;
     }
 
     .overview p {
-      margin: 0;
-      color: var(--text-muted);
+      margin: 0 0 1rem;
+      color: var(--text-secondary);
+    }
+
+    .overview p:last-child {
+      margin-bottom: 0;
     }
 
     .demo-notice {
       margin: 1rem 0;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       background: var(--surface-strong);
-      border-left: 4px solid var(--accent);
-      border-radius: 0.35rem;
-      color: var(--text);
-      font-size: 0.95rem;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--accent);
+      border-radius: var(--radius-small);
+    }
+
+    .report-section {
+      scroll-margin-top: 1rem;
+    }
+
+    .report-heading {
+      margin: 1.5rem 0 0.75rem;
+      font-size: clamp(1.3rem, 5vw, 1.7rem);
+    }
+
+    .report-instructions {
+      margin: 0 0 1rem;
+      color: var(--text-secondary);
     }
 
     .report-container {
@@ -118,64 +210,86 @@
       overflow: hidden;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 14px rgb(31 41 51 / 10%);
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow);
     }
 
     .report-frame {
       display: block;
       width: 100%;
-      height: clamp(720px, 104vw, 1060px);
+      height: 780px;
       border: 0;
       background: var(--surface);
     }
 
-    footer {
+    .site-footer {
       margin-top: 1.5rem;
-      padding: 1rem;
-      background: rgb(244 247 248 / 75%);
+      padding: 1.25rem 1rem;
+      background: rgb(244 247 248 / 85%);
       border-top: 1px solid var(--border);
       text-align: center;
+    }
+
+    .footer-content {
+      width: 100%;
+      max-width: var(--content-width);
+      margin: 0 auto;
     }
 
     .footer-links {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
     }
 
     .email-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 2.75rem;
-      height: 2.75rem;
-      color: var(--surface-strong);
+      width: 2.9rem;
+      height: 2.9rem;
       background: var(--accent-dark);
+      color: var(--surface-strong);
+      border: 2px solid var(--accent-dark);
       border-radius: 50%;
       text-decoration: none;
     }
 
     .email-link:hover {
-      color: var(--surface-strong);
       background: var(--accent);
+      color: var(--surface-strong);
+      border-color: var(--accent);
     }
 
     .email-link svg {
-      width: 1.35rem;
-      height: 1.35rem;
+      width: 1.4rem;
+      height: 1.4rem;
       fill: currentColor;
     }
 
     .formatter-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--surface-strong);
+      color: var(--accent-dark);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-small);
       font-weight: 700;
+      text-decoration: none;
+    }
+
+    .formatter-link:hover {
+      background: var(--accent-light);
+      color: var(--accent-dark);
     }
 
     .footer-note {
-      margin: 0.8rem 0 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      margin: 1rem 0 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
 
     .visually-hidden {
@@ -187,29 +301,52 @@
       overflow: hidden;
       white-space: nowrap;
       border: 0;
-      clip: rect(0, 0, 0, 0);
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 600px) {
       .page-shell {
-        width: min(1440px, 100%);
-        padding: 1.5rem;
+        padding: 1.25rem;
+      }
+
+      .hero {
+        padding: 2.75rem 2rem;
       }
 
       .overview {
         padding: 1.25rem 1.5rem;
       }
 
+      .report-frame {
+        height: 900px;
+      }
+
       .footer-links {
         flex-direction: row;
         justify-content: center;
-        gap: 1.25rem;
       }
     }
 
-    @media (min-width: 1100px) {
+    @media (min-width: 900px) {
       .page-shell {
         padding: 2rem;
+      }
+
+      .hero {
+        padding: 3.5rem 3rem;
+      }
+
+      .hero-description {
+        font-size: 1.15rem;
+      }
+
+      .overview {
+        padding: 1.75rem 2rem;
+      }
+
+      .report-frame {
+        height: 1060px;
       }
     }
 
@@ -217,37 +354,70 @@
       html {
         scroll-behavior: auto;
       }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <main class="page-shell">
-    <header class="hero">
-      <p class="eyebrow">Interactive demonstration</p>
-      <h1>A Request Tracker Demo</h1>
+  <a class="skip-link" href="#power-bi-report">
+    Skip to interactive report
+  </a>
 
-      <p class="subtitle">
-        Power BI request-management reporting using synthetic demonstration data.
-      </p>
-    </header>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-content">
+        <p class="eyebrow">Interactive Power BI demonstration</p>
+
+        <h1 id="page-title">ASML Request Tracker</h1>
+
+        <p class="hero-description">
+          Explore request volumes, SLA performance, resolution times and
+          operational trends using an interactive synthetic demonstration dataset.
+        </p>
+
+        <a class="hero-button" href="#power-bi-report">
+          View interactive report
+        </a>
+      </div>
+    </section>
 
     <section class="overview" aria-labelledby="overview-heading">
       <h2 id="overview-heading">How the tracker works</h2>
 
       <p>
-        The ASML Request Tracker provides an interactive view of service-request
-        activity and operational performance. The Overview page presents total
-        request volume, SLA compliance, average resolution time, active line-down
-        requests, current request status and request-type distribution. The
-        Operations page supports further investigation by showing request trends
-        over time, resolution time by system model, workload by assigned engineer
-        and individual request details. Use the Site Location, Request Type and
-        Status controls to filter the report. Select a chart bar, segment or data
-        point to cross-filter the other visuals, hover over items for additional
-        information and use the report page navigation to move between the
-        executive overview and operational detail. All displayed metrics
-        recalculate automatically as filters are applied.
+        The <strong>ASML Request Tracker</strong> is an interactive Power BI
+        demonstration built with synthetic service-request data to show how
+        operational performance can be monitored from a single report. The
+        <strong>Overview</strong> page summarises total request volume, SLA
+        compliance, average resolution time, active line-down requests, request
+        status and request-type distribution. The <strong>Operations</strong>
+        page supports deeper investigation by showing request trends over time,
+        resolution time by system model, workload by assigned engineer and the
+        underlying request-level detail.
+      </p>
+
+      <p>
+        Use the <strong>Site Location</strong>, <strong>Request Type</strong>
+        and <strong>Status</strong> filters to focus the report. Click any chart
+        bar, segment or data point to cross-filter the other visuals, hover over
+        visuals for additional detail, and use the report page tabs to move
+        between the executive summary and operational analysis.
+      </p>
+
+      <p>
+        All figures recalculate automatically as filters are applied, allowing
+        users to move from a high-level service-health view to the specific
+        requests, systems or teams driving the result. This demonstration
+        contains no production or client data.
       </p>
     </section>
 
@@ -257,49 +427,72 @@
     </aside>
 
     <section
-      class="report-container"
-      aria-label="Interactive Power BI request tracker"
+      id="power-bi-report"
+      class="report-section"
+      aria-labelledby="report-heading"
     >
-      <iframe
-        class="report-frame"
-        title="Interactive ASML request tracker Power BI report"
-        src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
-        loading="lazy"
-        allowfullscreen>
-      </iframe>
+      <h2 id="report-heading" class="report-heading">
+        Interactive report
+      </h2>
+
+      <p class="report-instructions">
+        Use the report controls to filter the data, select visuals to
+        cross-filter related information and use the page tabs to move between
+        the Overview and Operations pages.
+      </p>
+
+      <div class="report-container">
+        <iframe
+          class="report-frame"
+          title="Interactive ASML request tracker Power BI report"
+          src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <div class="footer-links">
-      <a
-        class="email-link"
-        href="mailto:alicefwickham@outlook.com"
-        aria-label="Email Alice Wickham"
-        title="Email Alice Wickham"
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
-        </svg>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a
+          class="email-link"
+          href="mailto:alicefwickham@outlook.com"
+          aria-label="Email Alice Wickham"
+          title="Email Alice Wickham"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2
+              2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0
+              4-8 5-8-5V6l8 5 8-5v2Z"
+            />
+          </svg>
 
-        <span class="visually-hidden">
-          alicefwickham@outlook.com
-        </span>
-      </a>
+          <span class="visually-hidden">
+            Email Alice Wickham at alicefwickham@outlook.com
+          </span>
+        </a>
 
-      <a
-        class="formatter-link"
-        href="https://ats-resume.preptodrive.online"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        FREE ATS RESUME FORMATTER
-      </a>
+        <a
+          class="formatter-link"
+          href="https://ats-resume.preptodrive.online"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          FREE ATS RESUME FORMATTER
+          <span class="visually-hidden">
+            — opens in a new tab
+          </span>
+        </a>
+      </div>
+
+      <p class="footer-note">
+        Interactive Power BI demonstration using synthetic data.
+      </p>
     </div>
-
-    <p class="footer-note">
-      Interactive Power BI demonstration using synthetic data.
-    </p>
   </footer>
 </body>
 </html>
