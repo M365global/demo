@@ -12,12 +12,12 @@
 
   <meta
     name="description"
-    content="Explore the COMPANY interactive Power BI request tracker for SLA performance, service operations and request analysis, and discover how React and JavaScript can create custom data simulators and decision-support tools."
+    content="Explore an interactive COMPANY Power BI request tracker for service-request volumes, SLA performance, resolution times and operational analysis. Discover how React and JavaScript can also create custom data simulators and decision-support tools."
   >
 
   <meta
     name="keywords"
-    content="Power BI dashboard, request tracker, SLA reporting, service operations, React data simulator, JavaScript analytics, interactive reporting, business intelligence, decision support tools"
+    content="Power BI request tracker, SLA reporting, service operations dashboard, React data simulator, JavaScript analytics, interactive reporting, operational performance, business intelligence"
   >
 
   <meta name="robots" content="noindex,nofollow">
@@ -31,7 +31,7 @@
 
   <meta
     property="og:description"
-    content="Explore service-request volume, SLA performance and operational trends in a live Power BI report, plus custom interactive analysis tools built with React and JavaScript."
+    content="Explore service-request volumes, SLA performance, resolution times and operational trends through a live, interactive Power BI report."
   >
 
   <link rel="icon" href="data:,">
@@ -160,9 +160,7 @@
       clip-path: inset(50%);
     }
 
-    /*
-     * HERO
-     */
+    /* HERO */
 
     .hero {
       max-width: var(--content-width);
@@ -239,9 +237,7 @@
       color: var(--teal-deep);
     }
 
-    /*
-     * REPORT
-     */
+    /* REPORT */
 
     .report-block {
       max-width: var(--content-width);
@@ -406,9 +402,7 @@
       font-weight: 700;
     }
 
-    /*
-     * SHARED CONTENT SECTIONS
-     */
+    /* SHARED SECTIONS */
 
     .overview,
     .how-to,
@@ -429,9 +423,7 @@
       line-height: 1.25;
     }
 
-    /*
-     * CLIENT OVERVIEW
-     */
+    /* OVERVIEW */
 
     .overview-panel {
       padding: 1.25rem;
@@ -449,9 +441,7 @@
       margin-bottom: 0;
     }
 
-    /*
-     * INTERACTION STEPS
-     */
+    /* INTERACTION STEPS */
 
     .steps {
       display: grid;
@@ -488,9 +478,7 @@
       font-size: 0.92rem;
     }
 
-    /*
-     * CAPABILITY CARDS
-     */
+    /* CAPABILITY CARDS */
 
     .chip-grid {
       display: grid;
@@ -516,9 +504,7 @@
       font-size: 0.9rem;
     }
 
-    /*
-     * REACT AND JAVASCRIPT ARTICLE
-     */
+    /* REACT AND JAVASCRIPT ARTICLE */
 
     .simulator-card {
       position: relative;
@@ -606,9 +592,7 @@
       border-color: var(--teal-soft);
     }
 
-    /*
-     * FOOTER
-     */
+    /* FOOTER */
 
     .site-footer {
       margin-top: 1rem;
@@ -679,9 +663,7 @@
       font-size: 0.88rem;
     }
 
-    /*
-     * TABLET
-     */
+    /* TABLET */
 
     @media (min-width: 600px) {
       .hero,
@@ -714,9 +696,7 @@
       }
     }
 
-    /*
-     * DESKTOP
-     */
+    /* DESKTOP */
 
     @media (min-width: 720px) {
       .steps,
@@ -754,9 +734,7 @@
       }
     }
 
-    /*
-     * REDUCED MOTION
-     */
+    /* REDUCED MOTION */
 
     @media (prefers-reduced-motion: reduce) {
       html {
@@ -787,9 +765,8 @@
     <h1>Request Tracker</h1>
 
     <p class="hero-description">
-      A live, filterable view of service-request volume, SLA performance,
-      resolution times and operational trends, built with synthetic data so
-      stakeholders can explore the experience safely.
+      See where service requests are building up, whether service targets are
+      being met and which systems or teams may need attention.
     </p>
 
     <div class="hero-actions">
@@ -841,6 +818,7 @@
             title="Interactive COMPANY request tracker Power BI report"
             src="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
             referrerpolicy="strict-origin-when-cross-origin"
+            allow="fullscreen"
             allowfullscreen>
           </iframe>
         </div>
@@ -871,31 +849,32 @@
         </h2>
 
         <p>
-          The <strong>COMPANY Request Tracker</strong> is an interactive Power
-          BI demonstration built with synthetic service-request data to show how
-          operational performance can be monitored from a single report. The
-          <strong>Overview</strong> page summarises total request volume, SLA
-          compliance, average resolution time, active line-down requests,
-          request status and request-type distribution. The
-          <strong>Operations</strong> page supports deeper investigation by
-          showing request trends over time, resolution time by system model,
-          workload by assigned engineer and the underlying request-level detail.
+          The <strong>COMPANY Request Tracker</strong> gives teams one place to
+          see what is happening across service requests. The
+          <strong>Overview</strong> page answers the immediate questions: How
+          many requests are open? Are service targets being met? How long are
+          issues taking to resolve? Are any line-down requests still active? It
+          also shows where requests are coming from and the types of support
+          being requested.
+        </p>
+
+        <p>
+          The <strong>Operations</strong> page helps explain what is driving
+          those results. It shows whether request volumes are rising or falling,
+          which system models take longer to resolve, how work is distributed
+          across engineers and the individual requests behind the headline
+          figures.
         </p>
 
         <p>
           Use the <strong>Site Location</strong>,
           <strong>Request Type</strong> and <strong>Status</strong> filters to
-          focus the report. Click any chart bar, segment or data point to
-          cross-filter the other visuals, hover over visuals for additional
-          detail, and use the report page tabs to move between the executive
-          summary and operational analysis.
-        </p>
-
-        <p>
-          All figures recalculate automatically as filters are applied,
-          allowing users to move from a high-level service-health view to the
-          specific requests, systems or teams driving the result. This
-          demonstration contains no production or client data.
+          focus on a particular part of the operation. Select a chart bar,
+          segment or data point to update the rest of the report, and hover over
+          a visual to see more detail. The figures recalculate immediately,
+          making it easier to move from a high-level warning sign to the
+          requests, systems or teams that need attention. All data shown is
+          synthetic and contains no production or client information.
         </p>
       </div>
     </section>
@@ -912,32 +891,33 @@
         <li>
           <span class="step-index">01</span>
 
-          <h3>Filter</h3>
+          <h3>Filter the view</h3>
 
           <p>
-            Use Site Location, Request Type and Status to narrow the view.
+            Choose a site, request type or status to focus on the part of the
+            operation you want to examine.
           </p>
         </li>
 
         <li>
           <span class="step-index">02</span>
 
-          <h3>Cross-filter</h3>
+          <h3>Select a result</h3>
 
           <p>
-            Select any chart bar, segment or point and the related visuals
-            update automatically.
+            Click a chart bar, segment or point and the other visuals update to
+            show the related information.
           </p>
         </li>
 
         <li>
           <span class="step-index">03</span>
 
-          <h3>Investigate</h3>
+          <h3>Find the cause</h3>
 
           <p>
-            Switch to Operations for trends, engineer workload, system
-            performance and request-level detail.
+            Open the Operations page to examine trends, engineer workloads,
+            system performance and individual requests.
           </p>
         </li>
       </ol>
@@ -948,25 +928,25 @@
       aria-labelledby="capabilities-heading"
     >
       <h2 id="capabilities-heading">
-        What this demonstration shows
+        What the report helps you see
       </h2>
 
       <div class="chip-grid">
         <article class="chip">
-          <h3>Executive overview</h3>
+          <h3>Current service health</h3>
 
           <p>
-            Request volume, SLA compliance, average resolution time and active
-            line-down status at a glance.
+            See request volumes, SLA performance, average resolution time and
+            active line-down issues in one view.
           </p>
         </article>
 
         <article class="chip">
-          <h3>Operational analysis</h3>
+          <h3>Where delays are occurring</h3>
 
           <p>
-            Trends over time, workload by engineer, request details and
-            resolution time by system model.
+            Compare systems, engineers and request trends to identify where
+            work may be slowing down.
           </p>
         </article>
 
@@ -992,35 +972,34 @@
           </p>
 
           <h2 id="simulator-heading">
-            Turn static data into interactive React and JavaScript simulators
+            Turn a report into a tool people can use to test decisions
           </h2>
 
           <p>
-            Power BI provides governed reporting, operational monitoring and
-            structured data exploration. For organisations that need scenario
-            modelling, adjustable assumptions or highly customised workflows,
-            React and JavaScript can extend analytics beyond the boundaries of
-            a traditional dashboard.
+            Power BI is useful for tracking performance and understanding what
+            has already happened. Sometimes a business also needs to ask,
+            “What happens if we change this?” That is where custom React and
+            JavaScript tools can add another layer.
           </p>
 
           <p>
-            Purpose-built analysis tools allow decision-makers to change
-            inputs, test assumptions and see calculated outcomes immediately.
-            This creates a more active decision-making experience than a static
-            presentation or spreadsheet.
+            An interactive simulator lets users adjust assumptions, test
+            different scenarios and see the result immediately. Instead of
+            presenting another static spreadsheet or slide, the analysis
+            becomes a practical tool that stakeholders can explore themselves.
           </p>
 
           <ul class="simulator-benefits">
             <li>
-              Test business scenarios and assumptions in real time.
+              Change assumptions and compare possible outcomes.
             </li>
 
             <li>
-              Create interfaces designed around a specific decision or process.
+              Build controls around a specific business decision.
             </li>
 
             <li>
-              Combine custom controls, business logic and live API data.
+              Connect calculations to live APIs and business data.
             </li>
           </ul>
 
