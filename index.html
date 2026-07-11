@@ -432,13 +432,43 @@
       border-radius: var(--radius-medium);
     }
 
-    .overview p {
+    .overview-panel > p:first-of-type {
       margin: 0 0 1rem;
       color: var(--ink-soft);
     }
 
-    .overview p:last-child {
+    .overview h3 {
+      margin: 1.25rem 0 0.5rem;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .overview-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--ink-soft);
+    }
+
+    .overview-list li {
+      margin-bottom: 0.45rem;
+      padding-left: 0.15rem;
+    }
+
+    .overview-list li:last-child {
       margin-bottom: 0;
+    }
+
+    .overview-list li::marker {
+      color: var(--teal);
+    }
+
+    .data-note {
+      margin: 1.25rem 0 0;
+      padding: 0.8rem 1rem;
+      background: var(--teal-soft);
+      color: var(--ink);
+      border-left: 4px solid var(--teal);
+      border-radius: var(--radius-small);
     }
 
     /* INTERACTION STEPS */
@@ -850,31 +880,60 @@
 
         <p>
           The <strong>COMPANY Request Tracker</strong> gives teams one place to
-          see what is happening across service requests. The
-          <strong>Overview</strong> page answers the immediate questions: How
-          many requests are open? Are service targets being met? How long are
-          issues taking to resolve? Are any line-down requests still active? It
-          also shows where requests are coming from and the types of support
-          being requested.
+          see what is happening across service requests.
         </p>
 
-        <p>
-          The <strong>Operations</strong> page helps explain what is driving
-          those results. It shows whether request volumes are rising or falling,
-          which system models take longer to resolve, how work is distributed
-          across engineers and the individual requests behind the headline
-          figures.
-        </p>
+        <h3>Overview page</h3>
 
-        <p>
-          Use the <strong>Site Location</strong>,
-          <strong>Request Type</strong> and <strong>Status</strong> filters to
-          focus on a particular part of the operation. Select a chart bar,
-          segment or data point to update the rest of the report, and hover over
-          a visual to see more detail. The figures recalculate immediately,
-          making it easier to move from a high-level warning sign to the
-          requests, systems or teams that need attention. All data shown is
-          synthetic and contains no production or client information.
+        <ul class="overview-list">
+          <li>How many requests are currently open</li>
+          <li>Whether service targets are being met</li>
+          <li>How long issues are taking to resolve</li>
+          <li>Whether any line-down requests remain active</li>
+          <li>Where requests are coming from</li>
+          <li>Which types of support are being requested</li>
+        </ul>
+
+        <h3>Operations page</h3>
+
+        <ul class="overview-list">
+          <li>Whether request volumes are rising or falling</li>
+          <li>Which system models take longer to resolve</li>
+          <li>How work is distributed across engineers</li>
+          <li>The individual requests behind the headline figures</li>
+        </ul>
+
+        <h3>How to use the report</h3>
+
+        <ul class="overview-list">
+          <li>
+            Use <strong>Site Location</strong>,
+            <strong>Request Type</strong> and <strong>Status</strong> to narrow
+            the view.
+          </li>
+
+          <li>
+            Select a chart bar, segment or data point to update the other
+            visuals.
+          </li>
+
+          <li>
+            Hover over a visual to see more detail.
+          </li>
+
+          <li>
+            Use the report tabs to move between the Overview and Operations
+            pages.
+          </li>
+
+          <li>
+            All figures recalculate immediately when filters are changed.
+          </li>
+        </ul>
+
+        <p class="data-note">
+          <strong>Demo data only:</strong>
+          No production, confidential or client information is included.
         </p>
       </div>
     </section>
