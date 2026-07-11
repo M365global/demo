@@ -1,4 +1,6 @@
-<!doctype html>
+from pathlib import Path
+
+html = r'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -60,7 +62,6 @@
       --teal-soft: #d8ece9;
       --border: #c7d3d3;
       --focus: #ffbf47;
-      --success: #1f9d63;
 
       --radius-small: 0.5rem;
       --radius-medium: 0.875rem;
@@ -169,12 +170,14 @@
     }
 
     .eyebrow {
+      max-width: 68ch;
       margin: 0 0 0.6rem;
       color: var(--teal-deep);
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      line-height: 1.5;
       text-transform: uppercase;
     }
 
@@ -203,11 +206,18 @@
     }
 
     .primary-button,
+    .secondary-button,
+    .data-download,
+    .email-link,
+    .simulator-link {
+      min-height: 44px;
+    }
+
+    .primary-button,
     .secondary-button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 2.75rem;
       padding: 0.7rem 1rem;
       border-radius: var(--radius-small);
       font-weight: 700;
@@ -255,42 +265,48 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 0.65rem;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
     }
 
-    .live-pill {
+    .demo-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.45rem;
+      min-height: 32px;
       padding: 0.35rem 0.75rem;
       background: var(--teal-soft);
       color: var(--teal-deep);
       border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.03em;
     }
 
-    .live-pill .dot {
-      width: 0.5rem;
-      height: 0.5rem;
-      background: var(--success);
-      border-radius: 50%;
-      box-shadow: 0 0 0 3px rgb(31 157 99 / 20%);
-      animation: pulse 2.2s ease-in-out infinite;
+    .data-download {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.58rem 0.8rem;
+      background: var(--panel);
+      color: var(--teal-deep);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-small);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
     }
 
-    @keyframes pulse {
-      0%,
-      100% {
-        opacity: 1;
-      }
+    .data-download:hover {
+      background: var(--teal-soft);
+      color: var(--teal-deep);
+    }
 
-      50% {
-        opacity: 0.45;
-      }
+    .data-download svg {
+      width: 1.05rem;
+      height: 1.05rem;
+      flex: 0 0 auto;
     }
 
     .bezel {
@@ -366,7 +382,7 @@
     .skeleton {
       position: absolute;
       inset: 0;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -382,7 +398,7 @@
       background-size: 200% 100%;
       color: var(--ink-soft);
       font-family: var(--font-mono);
-      font-size: 1rem;
+      font-size: 0.9rem;
       letter-spacing: 0.04em;
       animation: shimmer 1.4s ease-in-out infinite;
       transition: opacity 0.25s ease;
@@ -403,13 +419,21 @@
       }
     }
 
-    .fallback {
+    .mobile-report-actions {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+    }
+
+    .fallback,
+    .noscript-note {
       margin: 0.85rem 0 0;
       color: var(--ink-soft);
       font-size: 0.9rem;
     }
 
-    .fallback a {
+    .fallback a,
+    .noscript-note a {
       font-weight: 700;
     }
 
@@ -417,7 +441,8 @@
 
     .overview,
     .capabilities,
-    .simulator-promotion {
+    .simulator-promotion,
+    .contact-cta {
       max-width: var(--content-width);
       margin: 0 auto;
       padding: 1rem 1.25rem 2rem;
@@ -425,7 +450,8 @@
 
     .overview h2,
     .capabilities h2,
-    .simulator-promotion h2 {
+    .simulator-promotion h2,
+    .contact-cta h2 {
       margin: 0 0 1rem;
       font-size: clamp(1.3rem, 5vw, 1.7rem);
       letter-spacing: -0.015em;
@@ -439,6 +465,12 @@
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: var(--radius-medium);
+    }
+
+    .overview-panel > p:first-of-type,
+    .overview-list,
+    .interaction-intro {
+      max-width: 72ch;
     }
 
     .overview-panel > p:first-of-type {
@@ -459,7 +491,7 @@
     }
 
     .overview-list li {
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.5rem;
       padding-left: 0.15rem;
     }
 
@@ -471,19 +503,19 @@
       color: var(--teal);
     }
 
-    .explore-link {
-      display: inline-block;
-      margin-left: 0.25rem;
-      color: var(--teal-deep);
-      font-weight: 700;
-      white-space: nowrap;
+    .interaction-intro {
+      margin: 1.25rem 0 0;
+      color: var(--ink-soft);
     }
 
-    .explore-link:hover {
-      color: var(--teal);
+    .interaction-intro a {
+      display: inline-block;
+      margin-left: 0.15rem;
+      font-weight: 700;
     }
 
     .data-note {
+      max-width: 72ch;
       margin: 1.25rem 0 0;
       padding: 0.8rem 1rem;
       background: var(--teal-soft);
@@ -500,9 +532,9 @@
       border-top: 1px solid var(--border);
     }
 
-    .how-to-inline h2 {
+    .how-to-inline > h3 {
       margin: 0 0 1rem;
-      font-size: clamp(1.3rem, 5vw, 1.7rem);
+      font-size: clamp(1.2rem, 4.5vw, 1.5rem);
       letter-spacing: -0.015em;
       line-height: 1.25;
     }
@@ -531,7 +563,7 @@
       letter-spacing: 0.08em;
     }
 
-    .steps h3 {
+    .steps h4 {
       margin: 0.35rem 0 0.3rem;
       color: var(--ink);
       font-size: 1.05rem;
@@ -554,6 +586,7 @@
     .chip {
       padding: 1.1rem 1.25rem;
       background: var(--teal-soft);
+      border: 1px solid transparent;
       border-radius: var(--radius-medium);
     }
 
@@ -615,6 +648,7 @@
     }
 
     .simulator-card p {
+      max-width: 72ch;
       margin: 0 0 1rem;
       color: #e9f5f4;
     }
@@ -641,7 +675,6 @@
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      min-height: 2.75rem;
       padding: 0.7rem 1rem;
       background: #ffffff;
       color: var(--teal-deep);
@@ -657,11 +690,62 @@
       border-color: var(--teal-soft);
     }
 
+    /* FINAL CONVERSION CTA */
+
+    .contact-card {
+      padding: 1.25rem;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow-panel);
+      text-align: left;
+    }
+
+    .contact-card p {
+      max-width: 68ch;
+      margin: 0 0 1.1rem;
+      color: var(--ink-soft);
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1rem;
+      background: var(--teal-deep);
+      color: #ffffff;
+      border: 2px solid var(--teal-deep);
+      border-radius: var(--radius-small);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .email-link:hover {
+      background: var(--teal);
+      color: #ffffff;
+      border-color: var(--teal);
+    }
+
+    .email-link svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      fill: currentColor;
+      flex: 0 0 auto;
+    }
+
     /* FOOTER */
 
     .site-footer {
       margin-top: 1rem;
-      padding: 1.75rem 1.25rem 2.25rem;
+      padding: 1.5rem 1.25rem 2rem;
       border-top: 1px solid var(--border);
       text-align: center;
     }
@@ -675,57 +759,79 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
-    .email-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.9rem;
-      height: 2.9rem;
-      background: var(--teal-deep);
-      color: #ffffff;
-      border: 2px solid var(--teal-deep);
-      border-radius: 50%;
-      text-decoration: none;
-    }
-
-    .email-icon:hover {
-      background: var(--teal);
-      color: #ffffff;
-      border-color: var(--teal);
-    }
-
-    .email-icon svg {
-      width: 1.35rem;
-      height: 1.35rem;
-      fill: currentColor;
-    }
-
-    .formatter-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2.75rem;
-      padding: 0.65rem 0.9rem;
-      background: var(--panel);
-      color: var(--teal-deep);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-small);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .formatter-link:hover {
-      background: var(--teal-soft);
-      color: var(--teal-deep);
+    .footer-tool-link {
+      color: var(--ink-soft);
+      font-size: 0.88rem;
+      font-weight: 600;
     }
 
     .footer-note {
-      margin: 1rem 0 0;
+      margin: 0.85rem 0 0;
       color: var(--ink-soft);
-      font-size: 0.88rem;
+      font-size: 0.84rem;
+    }
+
+    /* LIGHTWEIGHT INTERACTION */
+
+    .primary-button,
+    .secondary-button,
+    .data-download,
+    .email-link,
+    .simulator-link,
+    .chip,
+    .steps li {
+      transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        background-color 160ms ease,
+        border-color 160ms ease;
+    }
+
+    @media (hover: hover) {
+      .primary-button:hover,
+      .secondary-button:hover,
+      .data-download:hover,
+      .email-link:hover,
+      .simulator-link:hover {
+        transform: translateY(-1px);
+      }
+
+      .chip:hover,
+      .steps li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -14px rgb(11 79 80 / 45%);
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 599px) {
+      .hero-actions,
+      .contact-actions {
+        width: 100%;
+      }
+
+      .primary-button,
+      .secondary-button,
+      .email-link {
+        width: 100%;
+      }
+
+      .report-meta {
+        align-items: stretch;
+      }
+
+      .data-download {
+        width: 100%;
+      }
+
+      .simulator-link {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     /* TABLET */
@@ -735,18 +841,25 @@
       .report-block,
       .overview,
       .capabilities,
-      .simulator-promotion {
+      .simulator-promotion,
+      .contact-cta {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
       }
 
-      .hero-actions {
+      .hero-actions,
+      .contact-actions {
         flex-direction: row;
       }
 
       .overview-panel,
-      .simulator-card {
+      .simulator-card,
+      .contact-card {
         padding: 1.75rem;
+      }
+
+      .mobile-report-actions {
+        display: none;
       }
 
       .footer-links {
@@ -770,7 +883,8 @@
       .report-block,
       .overview,
       .capabilities,
-      .simulator-promotion {
+      .simulator-promotion,
+      .contact-cta {
         padding-left: 2.5rem;
         padding-right: 2.5rem;
       }
@@ -809,7 +923,7 @@
 
   <header class="hero">
     <p class="eyebrow">
-      PREPARED FOR CLIENT. INTERACTIVE DEMONSTRATION WITH RANDOM DATASET FOR DEMONSTRATON PURPOSES ONLY
+      CLIENT DEMO · SYNTHETIC DATA · NO PRODUCTION INFORMATION
     </p>
 
     <h1>Request Tracker</h1>
@@ -842,23 +956,46 @@
       </h2>
 
       <div class="report-meta">
-        <span class="live-pill">
-          <span class="dot" aria-hidden="true"></span>
-          Live interactive report
+        <span class="demo-pill">
+          Interactive demo
         </span>
+
+        <a
+          class="data-download"
+          href="./company-request-tracker-demo.xlsx"
+          download
+        >
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          Download synthetic demo data
+        </a>
       </div>
 
       <div class="bezel">
         <div class="report-fit" id="reportFit">
-          <div class="report-scale" id="reportScale">
-            <div
-              class="skeleton"
-              id="skeleton"
-              aria-hidden="true"
-            >
-              Loading report…
-            </div>
+          <div
+            class="skeleton"
+            id="skeleton"
+            role="status"
+            aria-live="polite"
+          >
+            Loading interactive report…
+          </div>
 
+          <div class="report-scale" id="reportScale">
             <iframe
               class="report-frame"
               id="reportFrame"
@@ -874,6 +1011,21 @@
         </div>
       </div>
 
+      <div class="mobile-report-actions">
+        <a
+          class="primary-button"
+          href="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open report full screen
+        </a>
+
+        <a class="secondary-button" href="#how-it-works">
+          Learn how to use it
+        </a>
+      </div>
+
       <p class="fallback" id="fallback" hidden>
         Trouble loading the embedded report?
 
@@ -886,6 +1038,20 @@
           <span aria-hidden="true">↗</span>
         </a>
       </p>
+
+      <noscript>
+        <p class="noscript-note">
+          JavaScript is required to resize the embedded report.
+
+          <a
+            href="https://app.powerbi.com/view?r=eyJrIjoiNTc5M2ViMTYtNGM5Yi00MTc4LTgyNWQtNWY3M2UwYTBkOTJkIiwidCI6ImJhNjM5OWU5LThmODctNGJkMS1iZjk0LTUyNWJhNjlhZjc3MiJ9&pageName=ef9e00a5a686b2c8c191"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open the report directly
+          </a>
+        </p>
+      </noscript>
     </section>
 
     <section
@@ -899,8 +1065,8 @@
         </h2>
 
         <p>
-          The <strong> Request Tracker</strong> gives teams one place to
-          see what is happening across service requests.
+          The <strong>COMPANY Request Tracker</strong> gives teams one place to
+          understand service demand, performance and potential sources of delay.
         </p>
 
         <h3>Overview page</h3>
@@ -923,49 +1089,14 @@
           <li>The individual requests behind the headline figures</li>
         </ul>
 
-        <h3>How to use the report</h3>
+        <p class="interaction-intro">
+          Filter the data, select a chart to update the other visuals, and use
+          the report tabs to move between the Overview and Operations views.
 
-        <ul class="overview-list">
-          <li>
-            Use <strong>Site Location</strong>,
-            <strong>Request Type</strong> and <strong>Status</strong> to narrow
-            the view.
-
-            
-          </li>
-
-          <li>
-            Select a chart bar, segment or data point to update the other
-            visuals.
-
-           
-          </li>
-
-          <li>
-            Hover over a visual to see more detail.
-
-           
-          </li>
-
-          <li>
-            Use the report tabs to move between the
-            <strong>Overview</strong> and <strong>Operations</strong> pages.
-
-            
-          </li>
-
-          <li>
-            Change a filter and watch the figures recalculate immediately.
-
-            <a
-              class="explore-link"
-              href="#report"
-              aria-label="Explore automatic recalculation when report filters change"
-            >
-              Click here to explore
-            </a>
-          </li>
-        </ul>
+          <a href="#report">
+            Explore the interactive report
+          </a>
+        </p>
 
         <p class="data-note">
           <strong>Demo data only:</strong>
@@ -976,15 +1107,15 @@
           class="how-to-inline"
           aria-labelledby="explore-heading"
         >
-          <h2 id="explore-heading">
+          <h3 id="explore-heading">
             Explore in three moves
-          </h2>
+          </h3>
 
           <ol class="steps">
             <li>
               <span class="step-index">01</span>
 
-              <h3>Filter the view</h3>
+              <h4>Filter the view</h4>
 
               <p>
                 Choose a site, request type or status to focus on the part of
@@ -995,10 +1126,10 @@
             <li>
               <span class="step-index">02</span>
 
-              <h3>Select a result</h3>
+              <h4>Select a result</h4>
 
               <p>
-                Click a chart bar, segment or point and the other visuals
+                Select a chart bar, segment or point and the other visuals
                 update to show the related information.
               </p>
             </li>
@@ -1006,7 +1137,7 @@
             <li>
               <span class="step-index">03</span>
 
-              <h3>Find the cause</h3>
+              <h4>Find the cause</h4>
 
               <p>
                 Open the Operations page to examine trends, engineer workloads,
@@ -1023,21 +1154,21 @@
       aria-labelledby="capabilities-heading"
     >
       <h2 id="capabilities-heading">
-        What the report helps you see
+        What the report helps you answer
       </h2>
 
       <div class="chip-grid">
         <article class="chip">
-          <h3>Current service health</h3>
+          <h3>What is happening now?</h3>
 
           <p>
-            See request volumes, SLA performance, average resolution time and
-            active line-down issues in one view.
+            Review request volumes, SLA performance, average resolution time
+            and active line-down issues in one view.
           </p>
         </article>
 
         <article class="chip">
-          <h3>Where delays are occurring</h3>
+          <h3>Where are delays occurring?</h3>
 
           <p>
             Compare systems, engineers and request trends to identify where
@@ -1046,22 +1177,12 @@
         </article>
 
         <article class="chip">
-          <h3>Safe demonstration data</h3>
+          <h3>What sits behind the totals?</h3>
 
           <p>
-            Every figure is synthetic. No production, confidential or client
-            information is used.
+            Move from summary measures into the individual requests that
+            contribute to each result.
           </p>
-
-          <a
-  class="data-download"
-  href="./ASML_Request_Tracker_Demo.xlsx"
-  download
->
-  Download demo data
-</a>
-
-          
         </article>
       </div>
     </section>
@@ -1077,21 +1198,13 @@
           </p>
 
           <h2 id="simulator-heading">
-            Turn a report into a tool people can use to test decisions
+            Turn reporting into a tool people can use to test decisions
           </h2>
 
           <p>
-            Power BI is useful for tracking performance and understanding what
-            has already happened. Sometimes a business also needs to ask,
-            “What happens if we change this?” That is where custom React and
-            JavaScript tools can add another layer.
-          </p>
-
-          <p>
-            An interactive simulator lets users adjust assumptions, test
-            different scenarios and see the result immediately. Instead of
-            presenting another static spreadsheet or slide, the analysis
-            becomes a practical tool that stakeholders can explore themselves.
+            Power BI helps teams understand what has happened. Custom React
+            and JavaScript tools can extend that experience by allowing users
+            to adjust assumptions and compare possible outcomes.
           </p>
 
           <ul class="simulator-benefits">
@@ -1115,7 +1228,7 @@
             rel="noopener noreferrer"
             aria-label="Read Stop Presenting Static Data, Build Interactive Simulators on LinkedIn"
           >
-            Read: Stop Presenting Static Data—Build Interactive Simulators
+            Read the interactive simulators article
 
             <span aria-hidden="true">→</span>
 
@@ -1126,45 +1239,59 @@
         </div>
       </article>
     </section>
+
+    <section
+      class="contact-cta"
+      aria-labelledby="contact-heading"
+    >
+      <div class="contact-card">
+        <h2 id="contact-heading">
+          Interested in a version for your team?
+        </h2>
+
+        <p>
+          Discuss a Power BI dashboard, operational tracker or custom
+          interactive simulator designed around your reporting needs.
+        </p>
+
+        <div class="contact-actions">
+          <a
+            class="email-link"
+            href="mailto:alicefwickham@outlook.com"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path
+                d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2
+                2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0
+                4-8 5-8-5V6l8 5 8-5v2Z"
+              />
+            </svg>
+
+            Contact Alice
+          </a>
+
+          <a class="secondary-button" href="#report">
+            Return to the report
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
         <a
-          class="email-icon"
-          href="mailto:alicefwickham@outlook.com"
-          aria-label="Email Alice Wickham"
-          title="Email Alice Wickham"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path
-              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2
-              2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0
-              4-8 5-8-5V6l8 5 8-5v2Z"
-            />
-          </svg>
-
-          <span class="visually-hidden">
-            Email Alice Wickham at alicefwickham@outlook.com
-          </span>
-        </a>
-
-        <a
-          class="formatter-link"
+          class="footer-tool-link"
           href="https://ats-resume.preptodrive.online"
           target="_blank"
           rel="noopener noreferrer"
         >
-          FREE ATS RESUME FORMATTER
-
-          <span class="visually-hidden">
-            Opens in a new tab
-          </span>
+          Other tool: Free ATS Resume Formatter
         </a>
       </div>
 
@@ -1239,3 +1366,10 @@
   </script>
 </body>
 </html>
+'''
+
+out = Path("/mnt/data/company-request-tracker-optimized.html")
+out.write_text(html, encoding="utf-8")
+
+print(f"Created: {out}")
+print(f"Size: {out.stat().st_size:,} bytes")
