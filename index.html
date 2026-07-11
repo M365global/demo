@@ -332,8 +332,8 @@
     }
 
     /*
-     * The report keeps its original 1024 × 1060 dimensions.
-     * JavaScript scales the complete report proportionally to fit the container.
+     * The original report remains 1024 × 1060.
+     * JavaScript scales it proportionally to fit the available space.
      */
 
     .report-fit {
@@ -416,7 +416,6 @@
     /* SHARED SECTIONS */
 
     .overview,
-    .how-to,
     .capabilities,
     .simulator-promotion {
       max-width: var(--content-width);
@@ -425,7 +424,6 @@
     }
 
     .overview h2,
-    .how-to h2,
     .capabilities h2,
     .simulator-promotion h2 {
       margin: 0 0 1rem;
@@ -494,7 +492,20 @@
       border-radius: var(--radius-small);
     }
 
-    /* INTERACTION STEPS */
+    /* EXPLORE CARDS INSIDE OVERVIEW */
+
+    .how-to-inline {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-to-inline h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.3rem, 5vw, 1.7rem);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+    }
 
     .steps {
       display: grid;
@@ -507,7 +518,7 @@
 
     .steps li {
       padding: 1.1rem 1.25rem;
-      background: var(--panel);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-medium);
     }
@@ -522,6 +533,7 @@
 
     .steps h3 {
       margin: 0.35rem 0 0.3rem;
+      color: var(--ink);
       font-size: 1.05rem;
     }
 
@@ -722,7 +734,6 @@
       .hero,
       .report-block,
       .overview,
-      .how-to,
       .capabilities,
       .simulator-promotion {
         padding-left: 1.75rem;
@@ -758,7 +769,6 @@
       .hero,
       .report-block,
       .overview,
-      .how-to,
       .capabilities,
       .simulator-promotion {
         padding-left: 2.5rem;
@@ -921,27 +931,51 @@
             <strong>Request Type</strong> and <strong>Status</strong> to narrow
             the view.
 
-           
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore the Site Location, Request Type and Status filters"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
             Select a chart bar, segment or data point to update the other
             visuals.
 
-            
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore chart cross-filtering in the interactive report"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
             Hover over a visual to see more detail.
 
-           
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore report tooltips and additional visual details"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
             Use the report tabs to move between the
             <strong>Overview</strong> and <strong>Operations</strong> pages.
 
-            
+            <a
+              class="explore-link"
+              href="#report"
+              aria-label="Explore the Overview and Operations report pages"
+            >
+              Click here to explore
+            </a>
           </li>
 
           <li>
@@ -961,51 +995,51 @@
           <strong>Demo data only:</strong>
           No production, confidential or client information is included.
         </p>
+
+        <div
+          class="how-to-inline"
+          aria-labelledby="explore-heading"
+        >
+          <h2 id="explore-heading">
+            Explore in three moves
+          </h2>
+
+          <ol class="steps">
+            <li>
+              <span class="step-index">01</span>
+
+              <h3>Filter the view</h3>
+
+              <p>
+                Choose a site, request type or status to focus on the part of
+                the operation you want to examine.
+              </p>
+            </li>
+
+            <li>
+              <span class="step-index">02</span>
+
+              <h3>Select a result</h3>
+
+              <p>
+                Click a chart bar, segment or point and the other visuals
+                update to show the related information.
+              </p>
+            </li>
+
+            <li>
+              <span class="step-index">03</span>
+
+              <h3>Find the cause</h3>
+
+              <p>
+                Open the Operations page to examine trends, engineer workloads,
+                system performance and individual requests.
+              </p>
+            </li>
+          </ol>
+        </div>
       </div>
-    </section>
-
-    <section
-      class="how-to"
-      aria-labelledby="explore-heading"
-    >
-      <h2 id="explore-heading">
-        Explore in three moves
-      </h2>
-
-      <ol class="steps">
-        <li>
-          <span class="step-index">01</span>
-
-          <h3>Filter the view</h3>
-
-          <p>
-            Choose a site, request type or status to focus on the part of the
-            operation you want to examine.
-          </p>
-        </li>
-
-        <li>
-          <span class="step-index">02</span>
-
-          <h3>Select a result</h3>
-
-          <p>
-            Click a chart bar, segment or point and the other visuals update to
-            show the related information.
-          </p>
-        </li>
-
-        <li>
-          <span class="step-index">03</span>
-
-          <h3>Find the cause</h3>
-
-          <p>
-            Open the Operations page to examine trends, engineer workloads,
-            system performance and individual requests.
-          </p>
-        </li>
-      </ol>
     </section>
 
     <section
@@ -1176,17 +1210,10 @@
           return;
         }
 
-        /*
-         * Preserve the original report proportions.
-         * Scale down on smaller screens without stretching or cropping.
-         */
         var scale = Math.min(1, availableWidth / BASE_WIDTH);
         var renderedWidth = BASE_WIDTH * scale;
         var renderedHeight = BASE_HEIGHT * scale;
 
-        /*
-         * Centre the report when the container is wider than 1024px.
-         */
         var leftOffset = Math.max(
           0,
           (availableWidth - renderedWidth) / 2
